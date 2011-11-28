@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Unzipper</title>
+		<style>
+			ul {list-style-type: square;}
+		</style>
+	</head>
+	<body>
+		<form method="post" enctype="multipart/form-data">
+			Загрузите zip архив: <input type="file" name="zipfile"><br/>
+			<input type="submit" value="Submit">
+		</form>
+		{% if files %}
+			{% for file in files %}
+				<div>{{ file }}</div>
+			{% endfor %}
+		{% endif %}
+	</body>
+</html>
