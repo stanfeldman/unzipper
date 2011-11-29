@@ -2,6 +2,7 @@ from kiss.views.templates import TemplateResponse
 from kiss.views.base import Response
 import os
 from zipfile import *
+from models.models import *
 		
 class Controller(object):
 	def __init__(self):
@@ -13,9 +14,12 @@ class Controller(object):
 	def post(self, request):
 		file = request.files.get('zipfile')
 		file.save(self.tmp_file_path)
-		namelist = []
+		archive = None
 		with ZipFile(self.tmp_file_path, "r") as myzip:
+			archive = Archive(name=file.filename)
+			archive.save()
 			for item in myzip.namelist():
-				namelist.append(item)
+				archive_item = ArchiveItem(name=item, archive=archive)
+				archive_item.save()
 		os.remove(self.tmp_file_path)
-		return TemplateResponse("view.html", {"files": namelist})
+		return TemplateResponse("view.html", {"archive": archive, "items": ArchiveItem.objects(archive=archive)})

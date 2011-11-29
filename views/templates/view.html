@@ -8,13 +8,16 @@
 	</head>
 	<body>
 		<form method="post" enctype="multipart/form-data">
-			Загрузите zip архив: <input type="file" name="zipfile"><br/>
-			<input type="submit" value="Submit">
+			<p>Выберите zip архив: <input type="file" name="zipfile"></p>
+			<input type="submit" value="Послать">
 		</form>
-		{% if files %}
-			{% for file in files %}
-				<div>{{ file }}</div>
+		{% if archive %}
+			<p>Архив: {{ archive.name }}</p>
+			<ul>
+			{% for item in items %}
+				<li>{{ item.name }}</li>
 			{% endfor %}
+			</ul>
 		{% endif %}
 	</body>
 </html>
